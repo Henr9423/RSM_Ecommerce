@@ -1,0 +1,51 @@
+services:
+    db:
+        image: postgres:17-bookworm
+        container_name: rsm_postgres_db
+        healthcheck:
+            test: ["CMD", "pg_isready", "-U", "henr9423", "-d", "rsm_ecommerce_db"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: henr9423
+            POSTGRES_PASSWORD: fhq89hfh
+            POSTGRES_DB: rsm_ecommerce_db
+
+        ports:
+            - "5433:5432"
+
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+
+    adminer:
+        image: adminer
+        restart: unless-stopped
+        container_name: postgres-adminer-rsm
+        depends_on:
+          - db
+        ports:
+            - 8087:8080
+        environment:
+            - ADMINER_DEFAULT_SERVER=db
+
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: postgres-pgadmin-rsm
+        restart: unless-stopped
+        depends_on:
+            db:
+                condition: service_healthy
+        ports:
+         - "8086:80"
+        environment:
+            PGADMIN_DEFAULT_EMAIL: root@local.com
+            PGADMIN_DEFAULT_PASSWORD: root
+            
+        volumes:
+            - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+    pgdata:
+    pgadmin_data:
