@@ -1,0 +1,12 @@
+.error-text {
+
+    color: red;
+
+}
+
+.background {
+    display: flex;
+    background-color: black;
+    min-height: 100vh;
+
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+    <html>
+
+        <head>
+            <title>CSS and hooks</title>
+            <style>
+                .on-button{
+                    background-color: rgb(25,135,84);
+                    padding:10px 15px;
+                    color:white;
+                    border-radius: 10px;
+                }
+
+                .off-button{
+                    background-color: rgb(220,53,69);
+                    padding:10px 15px;
+                    color:white;
+                    border-radius: 10px;
+                }
+
+            </style>
+        </head>
+
+
+        <body>
+            <div class="js-container"></div>
+
+            <script src="https://unpkg.com/supersimpledev/react.js"></script>
+            <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+            <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+            <script src="react-basics.js"></script>
+
+            <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+            <script type="text/babel">
+             const container = document.querySelector('.js-container');
+
+                function OnOFFButton()
+                {
+                    const [isButtonOn,setIsButtonOn]=React.useState(true)
+                    
+                    function handleButtonClicked()
+                    {
+                        setIsButtonOn(!isButtonOn)
+                    }
+
+                    
+                    return(
+                        <div>
+                            <button onClick={handleButtonClicked} className={isButtonOn?"on-button":"off-button"}>{isButtonOn?(<>ON</>):(<>OFF</>)} </button>
+                        
+                        </div>
+                    )
+                }
+                
+                function App(){
+                    
+                
+
+
+                    return (
+                        <div className="app-container">
+
+                        <OnOFFButton />
+                       
+
+                        </div>
+
+                    );
+                }
+
+                ReactDOM.createRoot(container).render(<App />);
+            </script>
+
+        </body>
+
+
+
+
+    </html>
+
+
+
+<!DOCTYPE html>

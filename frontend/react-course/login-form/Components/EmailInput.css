@@ -1,0 +1,8 @@
+.email-input{
+    padding: 10px 20px;
+    padding-left: 15px;
+    border-radius: 5px;
+    border-width:1px;
+    font-size: 15px;
+    justify-content: start;
+}

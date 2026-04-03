@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+    <html>
+
+        <head>
+            <title>CSS and hooks</title>
+            <style>
+
+                .form{
+
+                    width: 340px;
+                    display:flex;
+                    flex-direction: column;
+                    gap: 14px
+                }
+
+                .form input{
+
+                    width:100%;
+                    box-sizing: border-box;
+
+                }
+
+                .password-input-container{
+                    display: grid;
+                    grid-template-columns: 1fr auto;  
+                    gap:10px;
+                    align-items: center;
+
+                }
+
+                .password-input-container input{
+
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+                .email-input{
+                    padding: 10px 20px;
+                    padding-left: 15px;
+                    border-radius: 5px;
+                    border-width:1px;
+                    font-size: 15px;
+                    justify-content: start;
+                }
+
+                .password-input{
+                    padding: 10px 20px;
+                    padding-left: 15px;
+                    border-radius: 5px;
+                    border-width:1px;
+                    font-size: 15px;
+                    justify-content: start;
+                }
+                
+                
+                .login-button{
+                    background-color: rgb(0,123,255);
+                    padding:10px 15px;
+                    color:white;
+                    border-radius: 5px;
+                    border-width: 0px;
+                }
+
+
+                .signup-button{
+                    background-color: rgb(0,123,255);
+                    padding:10px 15px;
+                    color:white;
+                    border-radius: 5px;
+                    margin-left: 5px;
+                    border-width: 0px;
+                }
+
+                .app-container{
+
+                    margin-left: auto;
+                    margin-right: auto;
+                    align-items: center;
+                    justify-content: center;
+                    height:100vh;
+                    
+                    display: flex;
+                    flex-direction: column;
+
+                   
+                }
+
+                .log-signup-button-container
+                {
+                    display: flex;
+                }
+
+                .hide-button{
+                    margin-left: 5px;
+                }
+
+                
+
+                
+
+            </style>
+        </head>
+
+
+        <body>
+            <div class="js-container"></div>
+
+            <script src="https://unpkg.com/supersimpledev/react.js"></script>
+            <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+            <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+            <script src="react-basics.js"></script>
+
+            <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+            <script type="text/babel">
+             const container = document.querySelector('.js-container');
+
+                function LoginButton()
+                {
+                    const [isButtonOn,setIsButtonOn]=React.useState(true)
+                    
+                    function handleButtonClicked()
+                    {
+                    }
+
+                    return(
+                        <div className="login-button-container">
+                            <button onClick={handleButtonClicked} className="login-button">Login</button>
+                        
+                        </div>
+                    )
+                }
+
+                  function SignUpButton()
+                {
+                    const [isButtonOn,setIsButtonOn]=React.useState(true)
+                    
+                    function handleButtonClicked()
+                    {
+                    }
+
+                    return(
+                        <div className="signup-button-container">
+                            <button onClick={handleButtonClicked} className="signup-button">Sign up</button>
+                        
+                        </div>
+                    )
+                }
+
+                function EmailInput()
+                {
+                    const [isButtonOn,setIsButtonOn]=React.useState(true)
+                    
+                    function handleButtonClicked()
+                    {
+                    }
+
+                    return(
+                        <div className="email-input-container">
+                            <input className="email-input" placeholder="Email" />
+                        
+                        </div>
+                    )
+                }
+
+                function PasswordInput()
+                {
+                    const [showPassword,setShowPassword]=React.useState(true)
+                    
+                    function handleButtonClicked()
+                    {
+                        setShowPassword(!showPassword)
+                    }
+
+                    return(
+                        <div className="password-input-container">
+                            <input className="password-input" placeholder="Password" type={showPassword? "text":"password"} />
+                            <button className="hide-button" onClick={handleButtonClicked}>{showPassword?<>Hide</>: <>Show</>}</button>
+                        
+                        </div>
+                    )
+                }
+                
+                
+                
+                function App(){
+                    
+                    
+
+
+                    return (
+                        <div className="app-container">
+                            <div className="form">
+                                <EmailInput />
+                                <PasswordInput />
+
+                                <div className="log-signup-button-container">
+                                    <LoginButton />
+                                    <SignUpButton />
+                                </div>
+
+                            </div>
+                        </div>
+
+                    );
+                }
+
+                ReactDOM.createRoot(container).render(<App />);
+            </script>
+
+        </body>
+
+
+
+
+    </html>
+
+
+
+<!DOCTYPE html>

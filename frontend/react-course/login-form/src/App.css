@@ -1,0 +1,33 @@
+  .form{
+
+    width: 340px;
+    display:flex;
+    flex-direction: column;
+    gap: 14px
+  }
+
+  .form input{
+
+    width:100%;
+    box-sizing: border-box;
+
+  }
+
+  .app-container{
+
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+    height:100vh;
+    
+    display: flex;
+    flex-direction: column;
+
+      
+  }
+
+  .log-signup-button-container
+  {
+    display: flex;
+  }

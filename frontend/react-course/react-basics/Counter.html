@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Counter button</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script src="react-basics.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+    <script type="text/babel">
+        const container = document.querySelector('.js-container');
+
+        function CounterButton({counterValue,setCounterValue}) {
+         
+        
+
+          function handleButtonClick()
+          {
+            setCounterValue(counterValue+1);
+          }
+
+          return (
+            <>
+            <button onClick={handleButtonClick}>Clicked {counterValue} {counterValue==1 ? (<>time</>):(<>times</>)} </button>
+            
+            </>);
+
+        }
+
+      
+
+        function App(){
+          const [counterValue,setCounterValue]=React.useState(0);
+          
+          function handleResetButtonClick()
+          {
+            setCounterValue(0);
+          }
+
+
+          return (
+            <>
+             <CounterButton counterValue={counterValue} setCounterValue={setCounterValue} />
+
+             <CounterButton counterValue={counterValue} setCounterValue={setCounterValue} />
+
+             <button onClick={handleResetButtonClick}>Reset</button>
+            
+
+            </>
+
+          );
+        }
+       
+
+        ReactDOM.createRoot(container).render(<App />);
+      
+    </script>
+  </body>
+</html>

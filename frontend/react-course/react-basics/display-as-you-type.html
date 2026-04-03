@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Counter button</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script src="react-basics.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+    <script type="text/babel">
+        const container = document.querySelector('.js-container');
+
+        function InputAndDisplay() {
+         
+         const [inputValue,setInputValue]=React.useState("");
+
+         function handleInput(event)
+         {
+          setInputValue(event.target.value)
+         }
+
+         function handleReset()
+         {
+           setInputValue("")
+         }
+
+         function handleSetExample()
+         {
+          setInputValue("Henrik")
+
+         }
+
+          return (
+            <>
+            <input placeHolder="Type a name here" size="30" onChange={handleInput} value={inputValue}></input>
+            <button onClick={handleReset}>Reset</button>
+            <button onClick={handleSetExample}>Example</button>
+
+            <p>Hello {inputValue}</p>
+            </>);
+
+        }
+
+      
+
+        function App(){
+         
+
+
+          return (
+            <>
+             <InputAndDisplay />
+
+             
+            
+
+            </>
+
+          );
+        }
+       
+
+        ReactDOM.createRoot(container).render(<App />);
+      
+    </script>
+  </body>
+</html>

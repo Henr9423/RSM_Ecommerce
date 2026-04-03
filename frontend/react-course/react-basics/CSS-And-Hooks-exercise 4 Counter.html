@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Counter button</title>
+
+    <style>
+
+        .body{
+            margin-top: 0px;
+            margin-bottom: 0px;
+            box-sizing: border-box;
+        
+        }
+        .counter {
+            background-color: rgb(25,135,84);
+            color:white;
+            flex: 0 0 auto;
+            padding:10px 15px;
+            
+        }
+
+        .reset{
+            background-color: rgb(25,135,84);
+            color: white;
+            flex: 0 0 auto;
+          
+           
+        }
+
+
+
+        .auto-click{
+            background-color: rgb(25,135,84);
+            color: white;
+            flex: 0 0 auto;
+           
+        }
+
+        .counter-container {
+            display:flex;
+            height:100vh;
+            background-color: rgb(222,222,222);
+            margin-top: 0px;
+            margin-bottom: 0px;
+            width:100%;
+            box-sizing: border-box;
+            
+
+            justify-content: center;   /* centers the whole group horizontally */
+            align-items: center;       /* centers vertically */
+            gap: 12px;                 /* space between buttons */
+
+        }
+    </style>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script src="react-basics.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+    <script type="text/babel">
+        const container = document.querySelector('.js-container');
+
+        function CounterButton({counterValue,setCounterValue}) {
+         
+        
+
+         
+
+          return (
+            <>
+            
+            
+            </>);
+
+        }
+
+      
+
+        function App(){
+          const [counterValue,setCounterValue]=React.useState(0);
+          const buttonClickElemRef=React.useRef(null)
+          function handleButtonClick()
+          {
+            setCounterValue(counterValue+1);
+          }
+
+
+          function handleResetButtonClick()
+          {
+            setCounterValue(0);
+          }
+
+          function handleAutoButtonClick()
+          {
+            setInterval(() => {
+                buttonClickElemRef.current.click() 
+            }, 1000);
+          
+          }
+
+
+          return (
+            <>
+
+                <div className= "counter-container">
+                    <button className="counter" onClick={handleButtonClick} ref={buttonClickElemRef}>Clicked {counterValue} {counterValue==1 ? (<>time</>):(<>times</>)} </button>
+
+                    <button className="reset" onClick={handleResetButtonClick}>Reset</button>
+
+                    <button className="auto-click" onClick={handleAutoButtonClick}>Auto Click</button>
+                </div>
+
+            </>
+
+          );
+        }
+       
+
+        ReactDOM.createRoot(container).render(<App />);
+      
+    </script>
+  </body>
+</html>

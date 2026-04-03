@@ -1,0 +1,8 @@
+.signup-button{
+    background-color: rgb(0,123,255);
+    padding:10px 15px;
+    color:white;
+    border-radius: 5px;
+    margin-left: 5px;
+    border-width: 0px;
+}
