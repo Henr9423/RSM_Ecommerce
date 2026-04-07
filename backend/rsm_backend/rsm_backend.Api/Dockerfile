@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["rsm_backend/rsm_backend.csproj", "rsm_backend/"]
-RUN dotnet restore "./rsm_backend/rsm_backend.csproj"
+COPY ["rsm_backend.Api/rsm_backend.Api.csproj", "rsm_backend.Api/"]
+RUN dotnet restore "./rsm_backend.Api/rsm_backend.Api.csproj"
 COPY . .
-WORKDIR "/src/rsm_backend"
-RUN dotnet build "./rsm_backend.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/rsm_backend.Api"
+RUN dotnet build "./rsm_backend.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./rsm_backend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./rsm_backend.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "rsm_backend.dll"]
+ENTRYPOINT ["dotnet", "rsm_backend.Api.dll"]

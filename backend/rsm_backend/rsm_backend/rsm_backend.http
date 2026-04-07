@@ -1,6 +1,0 @@
-@rsm_backend_HostAddress = http://localhost:5084
-
-GET {{rsm_backend_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
