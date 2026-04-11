@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using rsm_backend.Infrastructure.Data;
@@ -11,9 +12,11 @@ using rsm_backend.Infrastructure.Data;
 namespace rsm_backend.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260409133100_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,67 +153,6 @@ namespace rsm_backend.Infrastructure.Migrations
                     b.ToTable("customer_addresses", (string)null);
                 });
 
-            modelBuilder.Entity("rsm_backend.Domain.Entities.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("BillingAddressId")
-                        .HasColumnType("integer")
-                        .HasColumnName("billing_address_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer")
-                        .HasColumnName("customer_id");
-
-                    b.Property<int?>("ShippingAddressId")
-                        .HasColumnType("integer")
-                        .HasColumnName("shipping_address_id");
-
-                    b.Property<decimal>("ShippingFee")
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("shipping_fee");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("status");
-
-                    b.Property<decimal>("Subtotal")
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("subtotal");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("tax");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("total");
-
-                    b.HasKey("Id")
-                        .HasName("pk_orders");
-
-                    b.HasIndex("BillingAddressId")
-                        .HasDatabaseName("ix_orders_billing_address_id");
-
-                    b.HasIndex("CustomerId")
-                        .HasDatabaseName("ix_orders_customer_id");
-
-                    b.HasIndex("ShippingAddressId")
-                        .HasDatabaseName("ix_orders_shipping_address_id");
-
-                    b.ToTable("orders", (string)null);
-                });
-
             modelBuilder.Entity("rsm_backend.Domain.Entities.OrderAddress", b =>
                 {
                     b.Property<int>("Id")
@@ -299,38 +241,9 @@ namespace rsm_backend.Infrastructure.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("rsm_backend.Domain.Entities.Order", b =>
-                {
-                    b.HasOne("rsm_backend.Domain.Entities.OrderAddress", "BillingAddress")
-                        .WithMany()
-                        .HasForeignKey("BillingAddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_orders_order_addresses_billing_address_id");
-
-                    b.HasOne("rsm_backend.Domain.Entities.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_orders_customers_customer_id");
-
-                    b.HasOne("rsm_backend.Domain.Entities.OrderAddress", "ShippingAddress")
-                        .WithMany()
-                        .HasForeignKey("ShippingAddressId")
-                        .HasConstraintName("fk_orders_order_addresses_shipping_address_id");
-
-                    b.Navigation("BillingAddress");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("ShippingAddress");
-                });
-
             modelBuilder.Entity("rsm_backend.Domain.Entities.Customer", b =>
                 {
                     b.Navigation("Addresses");
-
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

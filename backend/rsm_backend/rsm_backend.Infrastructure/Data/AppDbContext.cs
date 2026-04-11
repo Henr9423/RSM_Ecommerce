@@ -17,6 +17,19 @@ namespace rsm_backend.Infrastructure.Data
 		}
 
 		public DbSet<OrderAddress> OrderAddresses { get; set; }
+		public DbSet<CustomerAddress> CustomerAddresses { get; set; }
+		public DbSet<Customer> Customers { get; set; }
+		
+		public  DbSet<Order> Orders { get; set; }
+
+		public DbSet<Brand> Brands { get; set; }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+
+			modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+		}
 	}
 	
 }

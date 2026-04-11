@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using rsm_backend.Infrastructure.Data;
@@ -11,9 +12,11 @@ using rsm_backend.Infrastructure.Data;
 namespace rsm_backend.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260409153409_Add_orders")]
+    partial class Add_orders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,18 +200,18 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnName("total");
 
                     b.HasKey("Id")
-                        .HasName("pk_orders");
+                        .HasName("pk_order");
 
                     b.HasIndex("BillingAddressId")
-                        .HasDatabaseName("ix_orders_billing_address_id");
+                        .HasDatabaseName("ix_order_billing_address_id");
 
                     b.HasIndex("CustomerId")
-                        .HasDatabaseName("ix_orders_customer_id");
+                        .HasDatabaseName("ix_order_customer_id");
 
                     b.HasIndex("ShippingAddressId")
-                        .HasDatabaseName("ix_orders_shipping_address_id");
+                        .HasDatabaseName("ix_order_shipping_address_id");
 
-                    b.ToTable("orders", (string)null);
+                    b.ToTable("order", (string)null);
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.OrderAddress", b =>
@@ -305,19 +308,19 @@ namespace rsm_backend.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("BillingAddressId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_orders_order_addresses_billing_address_id");
+                        .HasConstraintName("fk_order_order_addresses_billing_address_id");
 
                     b.HasOne("rsm_backend.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_orders_customers_customer_id");
+                        .HasConstraintName("fk_order_customers_customer_id");
 
                     b.HasOne("rsm_backend.Domain.Entities.OrderAddress", "ShippingAddress")
                         .WithMany()
                         .HasForeignKey("ShippingAddressId")
-                        .HasConstraintName("fk_orders_order_addresses_shipping_address_id");
+                        .HasConstraintName("fk_order_order_addresses_shipping_address_id");
 
                     b.Navigation("BillingAddress");
 

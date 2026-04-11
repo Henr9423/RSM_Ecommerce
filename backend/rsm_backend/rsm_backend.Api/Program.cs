@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using rsm_backend.Infrastructure.Data;
+
 namespace rsm_backend.Api
 {
 	public class Program
@@ -11,7 +12,9 @@ namespace rsm_backend.Api
 
 			// Add services to the container.
 			builder.Services.AddDbContext<AppDbContext>(options =>
-				options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+				options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+				.UseSnakeCaseNamingConvention()
+				);
 
 
 			builder.Services.AddControllers();
