@@ -22,6 +22,8 @@ namespace rsm_backend.Domain.Entities
 
 		public Inventory Inventory { get; set; } = null!;
 
+		public ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
+		public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 		public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 	}

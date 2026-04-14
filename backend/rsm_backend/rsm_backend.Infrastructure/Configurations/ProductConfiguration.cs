@@ -23,6 +23,11 @@ namespace rsm_backend.Infrastructure.Configurations
 				.HasForeignKey(p => p.BrandId)
 				.IsRequired()
 				.OnDelete(DeleteBehavior.Restrict);
+
+
+			builder.Property(p => p.CreatedAt).IsRequired();
+
+			builder.Property(p => p.UpdatedAt).IsRequired();
 		}
 	}
 }
