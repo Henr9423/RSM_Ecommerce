@@ -14,7 +14,7 @@ namespace rsm_backend.Domain.Entities
 
 
 		public ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
-}
+
 
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

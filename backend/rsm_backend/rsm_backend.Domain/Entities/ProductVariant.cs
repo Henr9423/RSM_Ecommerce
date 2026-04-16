@@ -24,6 +24,8 @@ namespace rsm_backend.Domain.Entities
 
 		public ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
 		public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+		public ICollection<CartItem> CartItems { get; set; }=new List<CartItem>();
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 		public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 	}

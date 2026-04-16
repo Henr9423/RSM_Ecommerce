@@ -32,6 +32,9 @@ namespace rsm_backend.Infrastructure.Configurations
 
 			builder.Property(a => a.CreatedAt)
 			.IsRequired();
+
+			builder.Property(a => a.UpdatedAt)
+			.IsRequired();
 		}
 	}
 }

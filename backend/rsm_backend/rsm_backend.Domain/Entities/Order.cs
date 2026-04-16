@@ -49,5 +49,7 @@ namespace rsm_backend.Domain.Entities
 
 		public ICollection<OrderItem> OrderItems { get; set; }= new List<OrderItem>();
 
+		public ICollection<Payment> Payments { get; set; }=new List<Payment>();
+
 	}
 }

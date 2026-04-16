@@ -35,7 +35,7 @@ namespace rsm_backend.Infrastructure.Configurations
 
 
 			builder.Property(pv => pv.Price)
-		   .HasColumnType("decimal(10,2)");
+		   .HasColumnType("decimal(18,2)");
 
 			builder.HasIndex(pv => pv.Sku)
 		   .IsUnique();

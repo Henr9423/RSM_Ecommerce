@@ -19,16 +19,16 @@ namespace rsm_backend.Infrastructure.Configurations
 				.IsRequired();
 
 			builder.Property(p => p.ShippingFee)
-				.HasColumnType("decimal(10,2)");
+				.HasColumnType("decimal(18,2)");
 
 			builder.Property(p => p.Subtotal)
-			.HasColumnType("decimal(10,2)");
+			.HasColumnType("decimal(18,2)");
 
 			builder.Property(p => p.Tax)
-			.HasColumnType("decimal(10,2)");
+			.HasColumnType("decimal(18,2)");
 
 			builder.Property(p => p.Total)
-			.HasColumnType("decimal(10,2)");
+			.HasColumnType("decimal(18,2)");
 
 			builder.HasOne(o=>o.Customer).WithMany(c=> c.Orders).HasForeignKey(o => o.CustomerId);
 
