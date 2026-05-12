@@ -47,6 +47,12 @@ namespace rsm_backend.Infrastructure.Data
 
 		public DbSet<ProductVariant> ProductVariants { get; set; }
 
+		public DbSet<Tag> Tags { get; set; }
+		public DbSet<ProductTag> ProductTags { get; set; }
+
+		public DbSet<DeliveryOption> DeliveryOptions { get; set; }
+
+		
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

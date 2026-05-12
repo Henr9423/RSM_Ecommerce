@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11709.299 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rsm_backend.Infrastructure", "rsm_backend.Infrastructure\rsm_backend.Infrastructure.csproj", "{8E978E3E-4490-403D-BA4F-AA304D1B4E52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rsm_backend.Domain", "rsm_backend.Domain\rsm_backend.Domain.csproj", "{EA85C65A-CA5F-4F51-8DF6-803F53168320}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rsm_backend.Api", "rsm_backend.Api\rsm_backend.Api.csproj", "{CB14E680-D72A-41F5-ABD5-69C6F108973C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rsm_backend.Application", "rsm_backend.Application\rsm_backend.Application.csproj", "{BBBC8CD1-BEA9-4406-B8B8-944D911275FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{CB14E680-D72A-41F5-ABD5-69C6F108973C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB14E680-D72A-41F5-ABD5-69C6F108973C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB14E680-D72A-41F5-ABD5-69C6F108973C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBBC8CD1-BEA9-4406-B8B8-944D911275FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBBC8CD1-BEA9-4406-B8B8-944D911275FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBBC8CD1-BEA9-4406-B8B8-944D911275FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBBC8CD1-BEA9-4406-B8B8-944D911275FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

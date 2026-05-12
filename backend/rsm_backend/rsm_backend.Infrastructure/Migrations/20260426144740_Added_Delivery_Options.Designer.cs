@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using rsm_backend.Infrastructure.Data;
@@ -11,9 +12,11 @@ using rsm_backend.Infrastructure.Data;
 namespace rsm_backend.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260426144740_Added_Delivery_Options")]
+    partial class Added_Delivery_Options
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -501,15 +504,6 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<int>("DeliveryOptionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("delivery_option_id");
-
-                    b.Property<decimal>("DeliveryPrice")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("delivery_price");
-
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("discount");
@@ -536,9 +530,6 @@ namespace rsm_backend.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_order_items");
-
-                    b.HasIndex("DeliveryOptionId")
-                        .HasDatabaseName("ix_order_items_delivery_option_id");
 
                     b.HasIndex("OrderId")
                         .HasDatabaseName("ix_order_items_order_id");
@@ -782,6 +773,7 @@ namespace rsm_backend.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Color")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("color");
 
@@ -950,13 +942,6 @@ namespace rsm_backend.Infrastructure.Migrations
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.OrderItem", b =>
                 {
-                    b.HasOne("rsm_backend.Domain.Entities.DeliveryOption", "DeliveryOption")
-                        .WithMany("Items")
-                        .HasForeignKey("DeliveryOptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_order_items_delivery_options_delivery_option_id");
-
                     b.HasOne("rsm_backend.Domain.Entities.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
@@ -970,8 +955,6 @@ namespace rsm_backend.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_order_items_product_variants_product_variant_id");
-
-                    b.Navigation("DeliveryOption");
 
                     b.Navigation("Order");
 
@@ -1090,11 +1073,6 @@ namespace rsm_backend.Infrastructure.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("rsm_backend.Domain.Entities.DeliveryOption", b =>
-                {
-                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.Order", b =>

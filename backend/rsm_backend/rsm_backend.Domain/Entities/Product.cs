@@ -18,9 +18,14 @@ namespace rsm_backend.Domain.Entities
 
 		public Brand Brand { get; set; } = null!;
 
+		public decimal AverageRating { get; set; } = 0m;
+
+		public int RatingCount { get; set; } = 0;
+
 		 public ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
 			public ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 
+		public ICollection<ProductTag> ProductTags { get; set; }=new List<ProductTag>();
 
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 		public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

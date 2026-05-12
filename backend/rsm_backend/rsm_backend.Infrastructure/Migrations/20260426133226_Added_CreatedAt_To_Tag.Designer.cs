@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using rsm_backend.Infrastructure.Data;
@@ -11,9 +12,11 @@ using rsm_backend.Infrastructure.Data;
 namespace rsm_backend.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260426133226_Added_CreatedAt_To_Tag")]
+    partial class Added_CreatedAt_To_Tag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -281,41 +284,6 @@ namespace rsm_backend.Infrastructure.Migrations
                     b.ToTable("customer_addresses", (string)null);
                 });
 
-            modelBuilder.Entity("rsm_backend.Domain.Entities.DeliveryOption", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("MaxDeliveryDays")
-                        .HasColumnType("integer")
-                        .HasColumnName("max_delivery_days");
-
-                    b.Property<int>("MinDeliveryDays")
-                        .HasColumnType("integer")
-                        .HasColumnName("min_delivery_days");
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("price");
-
-                    b.HasKey("Id")
-                        .HasName("pk_delivery_options");
-
-                    b.ToTable("delivery_options", null, t =>
-                        {
-                            t.HasCheckConstraint("ck_delivery_options_max_delivery_days_positive_or_zero", "max_delivery_days>=0");
-
-                            t.HasCheckConstraint("ck_delivery_options_min_delivery_days_positive_or_zero", "min_delivery_days>=0");
-
-                            t.HasCheckConstraint("ck_delivery_options_price_positive_or_zero", "price>=0");
-                        });
-                });
-
             modelBuilder.Entity("rsm_backend.Domain.Entities.Inventory", b =>
                 {
                     b.Property<int>("ProductVariantId")
@@ -501,15 +469,6 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<int>("DeliveryOptionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("delivery_option_id");
-
-                    b.Property<decimal>("DeliveryPrice")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)")
-                        .HasColumnName("delivery_price");
-
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("discount");
@@ -536,9 +495,6 @@ namespace rsm_backend.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_order_items");
-
-                    b.HasIndex("DeliveryOptionId")
-                        .HasDatabaseName("ix_order_items_delivery_option_id");
 
                     b.HasIndex("OrderId")
                         .HasDatabaseName("ix_order_items_order_id");
@@ -759,10 +715,6 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("tag_id");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
                     b.HasKey("ProductID", "TagId")
                         .HasName("pk_product_tags");
 
@@ -782,6 +734,7 @@ namespace rsm_backend.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Color")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("color");
 
@@ -950,13 +903,6 @@ namespace rsm_backend.Infrastructure.Migrations
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.OrderItem", b =>
                 {
-                    b.HasOne("rsm_backend.Domain.Entities.DeliveryOption", "DeliveryOption")
-                        .WithMany("Items")
-                        .HasForeignKey("DeliveryOptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_order_items_delivery_options_delivery_option_id");
-
                     b.HasOne("rsm_backend.Domain.Entities.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
@@ -970,8 +916,6 @@ namespace rsm_backend.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_order_items_product_variants_product_variant_id");
-
-                    b.Navigation("DeliveryOption");
 
                     b.Navigation("Order");
 
@@ -1090,11 +1034,6 @@ namespace rsm_backend.Infrastructure.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("rsm_backend.Domain.Entities.DeliveryOption", b =>
-                {
-                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.Order", b =>

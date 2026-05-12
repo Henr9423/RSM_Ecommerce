@@ -24,6 +24,10 @@ namespace rsm_backend.Infrastructure.Configurations
 				.IsRequired()
 				.OnDelete(DeleteBehavior.Restrict);
 
+			builder.HasMany(p => p.ProductTags).WithOne(pt => pt.Product).HasForeignKey(pt => pt.ProductID);
+
+			builder.Property(p => p.AverageRating).HasPrecision(3, 2).HasDefaultValue(0m);
+			builder.Property(p=>p.RatingCount).HasDefaultValue(0);
 
 			builder.Property(p => p.CreatedAt).IsRequired();
 

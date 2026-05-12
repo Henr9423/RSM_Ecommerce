@@ -16,7 +16,7 @@ namespace rsm_backend.Domain.Entities
 
 		public string Sku { get; set; } = string.Empty;
 
-		public string Color { get; set; } = string.Empty;
+		public string? Color { get; set; }
 
 		public decimal Price { get; set; }
 

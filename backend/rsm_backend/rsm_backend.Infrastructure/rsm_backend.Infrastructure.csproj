@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\rsm_backend.Application\rsm_backend.Application.csproj" />
     <ProjectReference Include="..\rsm_backend.Domain\rsm_backend.Domain.csproj" />
   </ItemGroup>
 
