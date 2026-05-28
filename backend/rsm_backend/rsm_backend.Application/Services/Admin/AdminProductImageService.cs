@@ -36,36 +36,57 @@ namespace rsm_backend.Application.Services.Admin
                                     .GroupBy(x => new { x.ProductVariantId, x.StorageKey })
                                     .FirstOrDefault(g => g.Count() > 1);
 
-                                            if (duplicateInBatch != null)
-                                            {
-                                                throw new InvalidOperationException("Duplicate image found in request batch.");
-                                            }
+            if (duplicateInBatch != null)
+            {
+                throw new InvalidOperationException("Duplicate image found in request batch.");
+            }
 
             DateTime now = DateTime.UtcNow;
             List<ProductImage> productImagesToAdd = new List<ProductImage>();
 
-            var sortOrdersByVariant = new Dictionary<int, int>();
+            var variantIds = productImageDTOs
+                                        .Select(x => x.ProductVariantId)
+                                        .Distinct()
+                                        .ToList();
+
+            List<ProductVariant> productVariants= await _productVariantRepo.GetSpecificProductVariantsAsync(variantIds);
+
+            List<ProductImage> productImages= await _productImageRepo.GetSpecificProductImagesAsync(variantIds);
+
+            var existingVariantIds = productVariants
+                                                .Select(x => x.Id)
+                                                .ToHashSet();
+            var existingImages = productImages
+                                               .Select(x => (x.ProductVariantId, x.StorageKey))
+                                               .ToHashSet();
+
+            var sortOrdersByVariant = productImages
+                                        .GroupBy(x => x.ProductVariantId)
+                                        .ToDictionary(
+                                            g => g.Key,
+                                            g => g.Max(x => x.SortOrder) + 1
+                                        );
+
 
             foreach (var dto in productImageDTOs)
             {
-                var productVariantExists = await _productVariantRepo.ExistsAsync(dto.ProductVariantId);
+                var productVariantExists = existingVariantIds.Contains(dto.ProductVariantId);
 
                 if(!productVariantExists)
                 {
                     throw new KeyNotFoundException($"ProductVariantId {dto.ProductVariantId} does not exist");
                 }
                 
-                var productImageExists = await _productImageRepo.ExistsAsync(dto.ProductVariantId, dto.StorageKey);
-
-                if(productImageExists)
+                var productImageExists = existingImages.Contains((dto.ProductVariantId,dto.StorageKey));
+            
+                if (productImageExists)
                 {
                     throw new InvalidOperationException($"ProductVariant with {dto.ProductVariantId} already has that imagekey");
                 }
 
                 if (!sortOrdersByVariant.ContainsKey(dto.ProductVariantId))
                 {
-                    var nextSortOrder = await _productImageRepo.GetNextSortOrderAsync(dto.ProductVariantId);
-                    sortOrdersByVariant[dto.ProductVariantId] = nextSortOrder;
+                    sortOrdersByVariant[dto.ProductVariantId] = 1;
                 }
 
                 var sortOrder = sortOrdersByVariant[dto.ProductVariantId];
@@ -81,6 +102,8 @@ namespace rsm_backend.Application.Services.Admin
                     UpdatedAt=now
 
                 });
+
+                existingImages.Add((dto.ProductVariantId, dto.StorageKey));
 
                 sortOrdersByVariant[dto.ProductVariantId]++;
             }

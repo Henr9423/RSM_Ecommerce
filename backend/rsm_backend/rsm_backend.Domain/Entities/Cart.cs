@@ -18,10 +18,14 @@ namespace rsm_backend.Domain.Entities
 	public class Cart
 	{
 		public int Id { get; set; }
-		public int? CustomerId { get; set; }
+
+
+        // null for guest carts
+        public int? CustomerId { get; set; }
 		public Customer? Customer { get; set; }
 
-		public int? SessionToken { get; set; }
+		// null for authenticated carts
+		public Guid? GuestCartToken { get; set; }
 
 		public CartStatus Status { get; set; }
 

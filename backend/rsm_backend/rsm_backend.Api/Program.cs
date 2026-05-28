@@ -28,15 +28,18 @@ namespace rsm_backend.Api
 			builder.Services.AddScoped<IProductRepository,ProductRepository> ();
             builder.Services.AddScoped<ITagRepository,TagRepository>();
             builder.Services.AddScoped<IProductVariantRepository,ProductVariantRepository>();
+            builder.Services.AddScoped<IProductImageRepository,ProductImageRepository>();
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 			//Services
 			builder.Services.AddScoped<IAdminBrandService, AdminBrandService>();
 			builder.Services.AddScoped<IAdminProductService, AdminProductService>();
             builder.Services.AddScoped<IAdminTagService, AdminTagService>();
             builder.Services.AddScoped<IAdminProductVariantService, AdminProductVariantService>();
+            builder.Services.AddScoped<IAdminProductImageService, AdminProductImageService>();
 
             builder.Services.AddScoped<IProductService, ProductService>();
-           
+            builder.Services.AddScoped<ICartService, CartService>();
             
 
 

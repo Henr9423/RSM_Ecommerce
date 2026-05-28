@@ -41,9 +41,9 @@ namespace rsm_backend.Infrastructure.Repositories
            return await _context.ProductImages.AnyAsync(i => i.ProductVariantId ==productVariantId && i.StorageKey == storageKey);
         }
 
-        public Task<List<ProductImage>> GetAllProductImages()
+        public async Task<List<ProductImage>> GetAllProductImagesAsync()
         {
-            throw new NotImplementedException();
+            return await _context.ProductImages.ToListAsync();
         }
 
         public Task<ProductImage?> GetByAltTextAsync(string altText)
@@ -63,6 +63,17 @@ namespace rsm_backend.Infrastructure.Repositories
                                     .MaxAsync(x => (int?)x.SortOrder);
 
             return (maxSortOrder ?? -1) + 1;
+        }
+
+        public async Task<List<ProductImage>> GetSpecificProductImagesAsync(List<int> productVariantIds)
+        {
+           
+
+            return await _context.ProductImages
+                                 .Where(x => productVariantIds.Contains(x.ProductVariantId))
+                                 .ToListAsync();
+
+                
         }
     }
 }

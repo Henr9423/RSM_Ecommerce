@@ -19,6 +19,8 @@ namespace rsm_backend.Infrastructure.Configurations
 
 			builder.Property(ca=>ca.Status).IsRequired();
 
+			builder.HasIndex(ca=>ca.GuestCartToken).IsUnique();
+
 			builder.Property(ca=>ca.CreatedAt).IsRequired();
 			builder.Property(ca=>ca.UpdatedAt).IsRequired();
 

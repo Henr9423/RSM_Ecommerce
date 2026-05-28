@@ -38,9 +38,9 @@ namespace rsm_backend.Infrastructure.Repositories
             return await _context.ProductVariants.AnyAsync(x => x.Id == id);
         }
 
-        public Task<List<ProductVariant>> GetAllProductVariants()
+        public async Task<List<ProductVariant>> GetAllProductVariantsAsync()
         {
-            throw new NotImplementedException();
+            return await _context.ProductVariants.ToListAsync();
         }
 
         public Task<ProductVariant?> GetByIdAsync(int id)
@@ -51,6 +51,11 @@ namespace rsm_backend.Infrastructure.Repositories
         public Task<ProductVariant?> GetBySkuAsync(string sku)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<ProductVariant>> GetSpecificProductVariantsAsync(List<int> productVariantIds)
+        {
+            return await _context.ProductVariants.Where(x => productVariantIds.Contains(x.Id)).ToListAsync();
         }
     }
 }

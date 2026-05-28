@@ -13,7 +13,9 @@ namespace rsm_backend.Application.Services.Interfaces.IRepositories
 
         Task<ProductVariant?> GetBySkuAsync(string sku);
 
-        Task<List<ProductVariant>> GetAllProductVariants();
+        Task<List<ProductVariant>> GetAllProductVariantsAsync();
+
+        Task<List<ProductVariant>> GetSpecificProductVariantsAsync(List<int> productVariantIds);
 
         Task AddAsync(ProductVariant productVariant);
 

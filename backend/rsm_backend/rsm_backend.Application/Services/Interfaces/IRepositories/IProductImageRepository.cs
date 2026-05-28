@@ -15,7 +15,9 @@ namespace rsm_backend.Application.Services.Interfaces.IRepositories
 
         Task<ProductImage?> GetByAltTextAsync(string altText);
 
-        Task<List<ProductImage>> GetAllProductImages();
+        Task<List<ProductImage>> GetAllProductImagesAsync();
+
+        Task<List<ProductImage>> GetSpecificProductImagesAsync(List<int> productVariantIds);
 
         Task AddAsync(ProductImage productImage);
 
