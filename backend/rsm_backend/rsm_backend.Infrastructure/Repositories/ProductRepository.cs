@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using rsm_backend.Application.DTO;
-using rsm_backend.Application.Services.Interfaces.IRepositories;
+using rsm_backend.Application.Services.Interfaces.Infrastructure.IRepositories;
 using rsm_backend.Domain.Entities;
 using rsm_backend.Infrastructure.Data;
 using System;
@@ -57,15 +57,7 @@ namespace rsm_backend.Infrastructure.Repositories
                 .AnyAsync(p=>p.Id == id);
         }
 
-        public async Task<List<Product>> GetAllProducts()
-        {
-            return await _context.Products
-                          .Include(p => p.ProductVariants)
-                              .ThenInclude(v => v.ProductImages)
-                          .Include(p => p.ProductTags)
-                              .ThenInclude(pt => pt.Tag)
-                          .ToListAsync();
-        }
+      
 
         public Task<Product?> GetByIdAsync(int id)
         {
@@ -75,6 +67,34 @@ namespace rsm_backend.Infrastructure.Repositories
         public Task<Product?> GetByNameAsync(string name)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<Product>> GetProductsWithSearch(string? search)
+        {
+           var query=_context.Products.AsQueryable();
+
+           query= query.Include(p => p.ProductVariants)
+                            .ThenInclude(v => v.ProductImages)
+                        .Include(p => p.ProductTags)
+                            .ThenInclude(pt => pt.Tag).AsSplitQuery();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                search=search.Trim();
+
+                //PostgresSql specific to make sure its a case-insensitive search
+                query = query.Where(p =>
+                EF.Functions.ILike(p.Name, $"%{search}%") ||
+                 EF.Functions.ILike(p.Description, $"%{search}%") ||
+                p.ProductTags.Any(t => EF.Functions.ILike(t.Tag.Name, $"%{search}%"))
+                );
+
+              
+            }
+
+            var products= await query.ToListAsync();
+
+            return products;
         }
     }
 }

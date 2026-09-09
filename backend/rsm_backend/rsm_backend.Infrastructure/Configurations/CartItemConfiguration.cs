@@ -18,8 +18,10 @@ namespace rsm_backend.Infrastructure.Configurations
 			builder.HasOne(ci=>ci.Cart).WithMany(ca=>ca.Items).HasForeignKey(ci=>ci.CartId).OnDelete(DeleteBehavior.Cascade);
 
 			builder.HasOne(ci=>ci.ProductVariant).WithMany(pv=>pv.CartItems).HasForeignKey(ci=>ci.ProductVariantId).OnDelete(DeleteBehavior.Restrict);
-			
-			builder.HasIndex(ci => new { ci.CartId,ci.ProductVariantId }).IsUnique();
+
+      
+
+            builder.HasIndex(ci => new { ci.CartId,ci.ProductVariantId }).IsUnique();
 
 			builder.Property(ci => ci.Quantity).IsRequired();
 

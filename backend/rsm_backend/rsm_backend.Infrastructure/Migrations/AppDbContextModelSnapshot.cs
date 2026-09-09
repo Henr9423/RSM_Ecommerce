@@ -17,10 +17,262 @@ namespace rsm_backend.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.25")
+                .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text")
+                        .HasColumnName("id");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text")
+                        .HasColumnName("concurrency_stamp");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_roles");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text")
+                        .HasColumnName("claim_type");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text")
+                        .HasColumnName("claim_value");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("role_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_role_claims");
+
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_asp_net_role_claims_role_id");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text")
+                        .HasColumnName("claim_type");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text")
+                        .HasColumnName("claim_value");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_user_claims");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_asp_net_user_claims_user_id");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text")
+                        .HasColumnName("login_provider");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("text")
+                        .HasColumnName("provider_key");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text")
+                        .HasColumnName("provider_display_name");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("LoginProvider", "ProviderKey")
+                        .HasName("pk_asp_net_user_logins");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_asp_net_user_logins_user_id");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("text")
+                        .HasColumnName("role_id");
+
+                    b.HasKey("UserId", "RoleId")
+                        .HasName("pk_asp_net_user_roles");
+
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_asp_net_user_roles_role_id");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text")
+                        .HasColumnName("login_provider");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text")
+                        .HasColumnName("value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name")
+                        .HasName("pk_asp_net_user_tokens");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("rsm_backend.Domain.Entities.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text")
+                        .HasColumnName("id");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("access_failed_count");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text")
+                        .HasColumnName("concurrency_stamp");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("email");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("email_confirmed");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("lockout_enabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("lockout_end");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_email");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_user_name");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("phone_number_confirmed");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text")
+                        .HasColumnName("security_stamp");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("two_factor_enabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("user_name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_users");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.Brand", b =>
                 {
@@ -63,8 +315,12 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("customer_id");
 
-                    b.Property<Guid?>("GuestCartToken")
-                        .HasColumnType("uuid")
+                    b.Property<int?>("DeliveryOptionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("delivery_option_id");
+
+                    b.Property<string>("GuestCartToken")
+                        .HasColumnType("text")
                         .HasColumnName("guest_cart_token");
 
                     b.Property<int>("Status")
@@ -79,11 +335,16 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasName("pk_carts");
 
                     b.HasIndex("CustomerId")
+                        .IsUnique()
                         .HasDatabaseName("ix_carts_customer_id");
+
+                    b.HasIndex("DeliveryOptionId")
+                        .HasDatabaseName("ix_carts_delivery_option_id");
 
                     b.HasIndex("GuestCartToken")
                         .IsUnique()
-                        .HasDatabaseName("ix_carts_guest_cart_token");
+                        .HasDatabaseName("ix_carts_guest_cart_token")
+                        .HasFilter("\"status\" = 0");
 
                     b.ToTable("carts", (string)null);
                 });
@@ -105,6 +366,11 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
                     b.Property<int>("ProductVariantId")
                         .HasColumnType("integer")
                         .HasColumnName("product_variant_id");
@@ -112,6 +378,10 @@ namespace rsm_backend.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer")
                         .HasColumnName("quantity");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("numeric")
+                        .HasColumnName("unit_price");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -188,6 +458,10 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("first_name");
 
+                    b.Property<bool>("IsGuest")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_guest");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text")
@@ -197,6 +471,10 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id")
                         .HasName("pk_customers");
 
@@ -205,6 +483,10 @@ namespace rsm_backend.Infrastructure.Migrations
 
                     b.HasIndex("DefaultShippingAddressId")
                         .HasDatabaseName("ix_customers_default_shipping_address_id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_customers_user_id");
 
                     b.ToTable("customers", (string)null);
                 });
@@ -302,6 +584,11 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("min_delivery_days");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
                     b.Property<decimal>("Price")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)")
@@ -318,6 +605,108 @@ namespace rsm_backend.Infrastructure.Migrations
 
                             t.HasCheckConstraint("ck_delivery_options_price_positive_or_zero", "price>=0");
                         });
+                });
+
+            modelBuilder.Entity("rsm_backend.Domain.Entities.DiscountCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("code");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expires_at");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active");
+
+                    b.Property<int?>("MaxUses")
+                        .HasColumnType("integer")
+                        .HasColumnName("max_uses");
+
+                    b.Property<int?>("MaxUsesPerCustomer")
+                        .HasColumnType("integer")
+                        .HasColumnName("max_uses_per_customer");
+
+                    b.Property<decimal?>("MinimumOrderAmount")
+                        .HasColumnType("numeric")
+                        .HasColumnName("minimum_order_amount");
+
+                    b.Property<DateTime?>("StartsAt")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("starts_at");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
+
+                    b.Property<int>("UsedCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("used_count");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("numeric")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id")
+                        .HasName("pk_discount_codes");
+
+                    b.ToTable("discount_codes", (string)null);
+                });
+
+            modelBuilder.Entity("rsm_backend.Domain.Entities.GuestOrderVerification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AttemptCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("attempt_count");
+
+                    b.Property<string>("CodeHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("code_hash");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expires_at");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer")
+                        .HasColumnName("order_id");
+
+                    b.Property<DateTime?>("UsedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("used_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_guest_order_verifications");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_guest_order_verifications_order_id");
+
+                    b.ToTable("guest_order_verifications", (string)null);
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.Inventory", b =>
@@ -368,6 +757,10 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("billing_address_id");
 
+                    b.Property<decimal>("CouponDiscount")
+                        .HasColumnType("numeric")
+                        .HasColumnName("coupon_discount");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
@@ -376,9 +769,22 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("customer_id");
 
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("numeric")
-                        .HasColumnName("discount");
+                    b.Property<int?>("DeliveryOptionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("delivery_option_id");
+
+                    b.Property<DateTime?>("EstimatedDeliveryFrom")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("estimated_delivery_from");
+
+                    b.Property<DateTime?>("EstimatedDeliveryTo")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("estimated_delivery_to");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("order_number");
 
                     b.Property<int?>("ShippingAddressId")
                         .HasColumnType("integer")
@@ -413,6 +819,13 @@ namespace rsm_backend.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId")
                         .HasDatabaseName("ix_orders_customer_id");
+
+                    b.HasIndex("DeliveryOptionId")
+                        .HasDatabaseName("ix_orders_delivery_option_id");
+
+                    b.HasIndex("OrderNumber")
+                        .IsUnique()
+                        .HasDatabaseName("ix_orders_order_number");
 
                     b.HasIndex("ShippingAddressId")
                         .HasDatabaseName("ix_orders_shipping_address_id");
@@ -505,18 +918,10 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<int>("DeliveryOptionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("delivery_option_id");
-
                     b.Property<decimal>("DeliveryPrice")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)")
                         .HasColumnName("delivery_price");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("discount");
 
                     b.Property<decimal>("LineTotal")
                         .HasColumnType("decimal(18,2)")
@@ -534,15 +939,16 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("quantity");
 
+                    b.Property<decimal>("UnitDiscount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("unit_discount");
+
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("unit_price");
 
                     b.HasKey("Id")
                         .HasName("pk_order_items");
-
-                    b.HasIndex("DeliveryOptionId")
-                        .HasDatabaseName("ix_order_items_delivery_option_id");
 
                     b.HasIndex("OrderId")
                         .HasDatabaseName("ix_order_items_order_id");
@@ -793,6 +1199,10 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("numeric")
+                        .HasColumnName("discount_amount");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("price");
@@ -850,15 +1260,80 @@ namespace rsm_backend.Infrastructure.Migrations
                     b.ToTable("tags", (string)null);
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_role_claims_asp_net_roles_role_id");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("rsm_backend.Domain.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_claims_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("rsm_backend.Domain.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_logins_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_roles_asp_net_roles_role_id");
+
+                    b.HasOne("rsm_backend.Domain.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_roles_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("rsm_backend.Domain.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id");
+                });
+
             modelBuilder.Entity("rsm_backend.Domain.Entities.Cart", b =>
                 {
                     b.HasOne("rsm_backend.Domain.Entities.Customer", "Customer")
-                        .WithMany("Carts")
-                        .HasForeignKey("CustomerId")
+                        .WithOne("Cart")
+                        .HasForeignKey("rsm_backend.Domain.Entities.Cart", "CustomerId")
                         .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("fk_carts_customers_customer_id");
 
+                    b.HasOne("rsm_backend.Domain.Entities.DeliveryOption", "DeliveryOption")
+                        .WithMany("Carts")
+                        .HasForeignKey("DeliveryOptionId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_carts_delivery_options_delivery_option_id");
+
                     b.Navigation("Customer");
+
+                    b.Navigation("DeliveryOption");
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.CartItem", b =>
@@ -896,9 +1371,16 @@ namespace rsm_backend.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_customers_customer_addresses_default_shipping_address_id");
 
+                    b.HasOne("rsm_backend.Domain.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("fk_customers_users_user_id");
+
                     b.Navigation("DefaultBillingAddress");
 
                     b.Navigation("DefaultShippingAddress");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.CustomerAddress", b =>
@@ -911,6 +1393,18 @@ namespace rsm_backend.Infrastructure.Migrations
                         .HasConstraintName("fk_customer_addresses_customers_customer_id");
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("rsm_backend.Domain.Entities.GuestOrderVerification", b =>
+                {
+                    b.HasOne("rsm_backend.Domain.Entities.Order", "Order")
+                        .WithOne("GuestOrderVerification")
+                        .HasForeignKey("rsm_backend.Domain.Entities.GuestOrderVerification", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_guest_order_verifications_orders_order_id");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.Inventory", b =>
@@ -940,6 +1434,11 @@ namespace rsm_backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_orders_customers_customer_id");
 
+                    b.HasOne("rsm_backend.Domain.Entities.DeliveryOption", "DeliveryOption")
+                        .WithMany("Orders")
+                        .HasForeignKey("DeliveryOptionId")
+                        .HasConstraintName("fk_orders_delivery_options_delivery_option_id");
+
                     b.HasOne("rsm_backend.Domain.Entities.OrderAddress", "ShippingAddress")
                         .WithMany()
                         .HasForeignKey("ShippingAddressId")
@@ -949,18 +1448,13 @@ namespace rsm_backend.Infrastructure.Migrations
 
                     b.Navigation("Customer");
 
+                    b.Navigation("DeliveryOption");
+
                     b.Navigation("ShippingAddress");
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.OrderItem", b =>
                 {
-                    b.HasOne("rsm_backend.Domain.Entities.DeliveryOption", "DeliveryOption")
-                        .WithMany("Items")
-                        .HasForeignKey("DeliveryOptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_order_items_delivery_options_delivery_option_id");
-
                     b.HasOne("rsm_backend.Domain.Entities.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
@@ -974,8 +1468,6 @@ namespace rsm_backend.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_order_items_product_variants_product_variant_id");
-
-                    b.Navigation("DeliveryOption");
 
                     b.Navigation("Order");
 
@@ -1091,18 +1583,22 @@ namespace rsm_backend.Infrastructure.Migrations
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Carts");
+                    b.Navigation("Cart");
 
                     b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.DeliveryOption", b =>
                 {
-                    b.Navigation("Items");
+                    b.Navigation("Carts");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("rsm_backend.Domain.Entities.Order", b =>
                 {
+                    b.Navigation("GuestOrderVerification");
+
                     b.Navigation("OrderItems");
 
                     b.Navigation("Payments");

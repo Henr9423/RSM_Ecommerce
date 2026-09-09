@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using rsm_backend.Application.Services.Interfaces.IRepositories;
+using rsm_backend.Application.Services.Interfaces.Infrastructure.IRepositories;
 using rsm_backend.Domain.Entities;
 using rsm_backend.Infrastructure.Data;
 using System;
@@ -25,6 +25,21 @@ namespace rsm_backend.Infrastructure.Repositories
         public Task AddAsync(ProductVariant productVariant)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task AddProductImageToVariantAsync(ProductImage image, int productVariantId, CancellationToken cancellationToken)
+        {
+           var productVariant= await _context.ProductVariants.FirstOrDefaultAsync(pv=> pv.Id == productVariantId, cancellationToken);
+
+            if (productVariant == null)
+            {
+                throw new KeyNotFoundException(
+                    $"Product variant with ID {productVariantId} was not found.");
+            }
+
+            productVariant.ProductImages.Add(image);
+            await _context.SaveChangesAsync(cancellationToken);
+
         }
 
         public async Task BulkCreateAsync(List<ProductVariant> productVariants)

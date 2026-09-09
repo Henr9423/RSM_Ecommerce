@@ -1,6 +1,6 @@
 ﻿using rsm_backend.Application.DTO;
 using rsm_backend.Application.Services.Interfaces;
-using rsm_backend.Application.Services.Interfaces.IRepositories;
+using rsm_backend.Application.Services.Interfaces.Infrastructure.IRepositories;
 using rsm_backend.Domain.Entities;
 using System;
 using System.Collections.Generic;

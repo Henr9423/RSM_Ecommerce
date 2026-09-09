@@ -16,11 +16,17 @@ namespace rsm_backend.Domain.Entities
 
 		public int ProductVariantId { get; set; }
 
-		public ProductVariant ProductVariant { get; set; }= null!;
+		public string Name { get; set; } = string.Empty;
+
+        public decimal UnitPrice { get; set; }
+
+        public ProductVariant ProductVariant { get; set; }= null!;
 
 		public int Quantity { get; set; }
 
-		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+       
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 		public DateTime UpdatedAt { get; set;} = DateTime.UtcNow;
 	}
 }

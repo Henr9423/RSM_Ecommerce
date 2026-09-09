@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using rsm_backend.Application.Services.Interfaces.IRepositories;
+using rsm_backend.Application.Services.Interfaces.Infrastructure.IRepositories;
 using rsm_backend.Domain.Entities;
 using rsm_backend.Infrastructure.Data;
 using System;

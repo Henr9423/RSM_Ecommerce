@@ -9,10 +9,10 @@ namespace rsm_backend.Domain.Entities
 
 	public enum CartStatus
 	{
-		active,
-		checked_out,
-		abandoned,
-		expired
+		Active,
+		Checked_Out,
+		Abandoned,
+		Expired
 
 	}
 	public class Cart
@@ -25,13 +25,19 @@ namespace rsm_backend.Domain.Entities
 		public Customer? Customer { get; set; }
 
 		// null for authenticated carts
-		public Guid? GuestCartToken { get; set; }
+		public string? GuestCartToken { get; set; }
+
+	
 
 		public CartStatus Status { get; set; }
 
-		public ICollection<CartItem> Items { get; set; }= new List<CartItem>();
+		public ICollection<CartItem> Items { get; set; } = new List<CartItem>();
 
-		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public int? DeliveryOptionId { get; set; }
+
+        public DeliveryOption? DeliveryOption { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 		public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
 	}

@@ -24,6 +24,8 @@ namespace rsm_backend.Infrastructure.Configurations
 
             builder.Property(d => d.Price).IsRequired();
 
+            builder.Property(d=>d.Name).IsRequired();
+
             builder.Property(d => d.Price)
                 .HasPrecision(10, 2)
                 .IsRequired();

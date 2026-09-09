@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using rsm_backend.Application.Services.Interfaces.IRepositories;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using rsm_backend.Application.Services.Interfaces.Infrastructure.IRepositories;
 using rsm_backend.Domain.Entities;
 using rsm_backend.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,10 +26,30 @@ namespace rsm_backend.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+
+
         public async Task AddItemAsync(int cartId, int productVariantId, int quantity)
         {
-          
-            var cartItem = new CartItem() { CartId = cartId, ProductVariantId = productVariantId, Quantity = quantity, CreatedAt=DateTime.UtcNow };
+            var defaultDeliveryOption= await _context.DeliveryOptions.FirstOrDefaultAsync();
+
+            if (defaultDeliveryOption == null)
+            {
+                throw new InvalidOperationException(
+                    "No delivery options exist. At least one delivery option is required to add an item.");
+            }
+
+            var productVariant = await _context.ProductVariants
+                           .Include(pv => pv.Product)
+                           .SingleOrDefaultAsync(pv => pv.Id == productVariantId);
+
+                                if (productVariant is null)
+                                {
+                                    throw new KeyNotFoundException(
+                                        $"Product variant with ID {productVariantId} was not found.");
+                                }
+
+
+            var cartItem = new CartItem() { CartId = cartId, ProductVariantId = productVariantId, Name=productVariant.Product.Name, UnitPrice=productVariant.Price, Quantity = quantity, CreatedAt=DateTime.UtcNow};
 
             _context.CartItems.Add(cartItem);
             
@@ -84,13 +106,8 @@ namespace rsm_backend.Infrastructure.Repositories
 
         public async Task RemoveItemAsync(CartItem cartItem)
         {
-            
-            if (cartItem == null)
-            { 
-                throw new ArgumentNullException(nameof(cartItem));
-            }
-
-            _context.Remove(cartItem);
+          
+            _context.CartItems.Remove(cartItem);
 
             
         }
@@ -98,6 +115,12 @@ namespace rsm_backend.Infrastructure.Repositories
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateDeliveryOptionAsync(int cartId, int cartItemId, int deliveryOptionId)
+        {
+           
+
         }
     }
 }

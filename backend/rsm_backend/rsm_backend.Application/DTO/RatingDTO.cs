@@ -8,7 +8,7 @@ namespace rsm_backend.Application.DTO
 {
     public class RatingDTO
     {
-        public decimal Stars { get; set; }
+        public decimal AverageRating { get; set; }
         public int Count { get; set; }
 
     }

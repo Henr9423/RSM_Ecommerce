@@ -1,0 +1,51 @@
+.order-login {
+    margin-top: 60px;
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container{
+    width: 400px;
+    padding: 30px;
+
+    border: 1px solid #1e7119;
+    border-radius: 10px;
+    
+    background-color: rgb(208, 129, 59);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+   
+}
+
+.email-input{
+    padding: 10px 20px;
+    padding-left: 15px;
+    border-radius: 5px;
+    border-width:1px;
+    font-size: 15px;
+    
+}
+
+
+.order-number-input {
+    padding: 10px 20px;
+    padding-left: 15px;
+    border-radius: 5px;
+    border-width:1px;
+    font-size: 15px;
+    align-items:center;
+}
+
+.input-group{
+
+    display: flex;
+    flex-direction: column;
+    gap:15
+}

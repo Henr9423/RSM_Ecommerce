@@ -20,13 +20,11 @@ namespace rsm_backend.Domain.Entities
 		public int Quantity { get; set; }
 
 		public decimal UnitPrice { get; set; }
-		public decimal Discount { get; set; }
+		public decimal UnitDiscount { get; set; }
 
 		public decimal LineTotal { get; set; }
 
-        public int DeliveryOptionId { get; set; }
-        public DeliveryOption DeliveryOption { get; set; } = null!;
-
+    
         public decimal DeliveryPrice { get; set; }  // what it cost at that time
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

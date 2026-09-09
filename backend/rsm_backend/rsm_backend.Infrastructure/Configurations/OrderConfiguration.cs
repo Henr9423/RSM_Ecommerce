@@ -51,8 +51,12 @@ namespace rsm_backend.Infrastructure.Configurations
 			builder.Property(c => c.CustomerId)
 				.IsRequired();
 
+            builder.HasOne(oi => oi.DeliveryOption).WithMany(d => d.Orders).HasForeignKey(oi => oi.DeliveryOptionId);
 
-			builder.ToTable(t =>
+            builder.HasIndex(o => o.OrderNumber)
+					.IsUnique();
+
+            builder.ToTable(t =>
 			{
 
 				t.HasCheckConstraint("ck_order_shipping_fee_non_negative", "shipping_fee >= 0");

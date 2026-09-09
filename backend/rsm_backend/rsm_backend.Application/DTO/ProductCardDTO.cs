@@ -13,6 +13,9 @@ namespace rsm_backend.Application.DTO
         public int Id { get; set; }
 
         [Required]
+        public int? VariantId { get; set; }
+
+        [Required]
         public string Name { get; set; } = string.Empty;
      
         public RatingDTO Rating { get; set; } = null!;
@@ -22,7 +25,7 @@ namespace rsm_backend.Application.DTO
 
         public List<string> Keywords { get; set; } = new List<string>();
 
-        public string? ImageKey { get; set; }
+        public string? ImageUrl { get; set; }
 
     }
 }

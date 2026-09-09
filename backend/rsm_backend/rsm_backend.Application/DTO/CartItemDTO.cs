@@ -10,14 +10,26 @@ namespace rsm_backend.Application.DTO
     public class CartItemDTO
     {
         [Required]
-        public string CartId { get; set; } = string.Empty;
+        public int Id { get; set; }
 
 
         [Required]
-        public string ProductVariantId { get; set; } = string.Empty;
+        public int ProductVariantId { get; set; }
 
         [Range(1, int.MaxValue)]
-        public int Quantity { get; set; } 
+        public int Quantity { get; set; }
 
+        public string ProductName { get; set; } = "";
+
+        [Range(typeof(decimal), "0.01", "999999.99")]
+        public decimal UnitPrice { get; set; }
+
+        public string? ImageUrl { get; set; } = string.Empty;
+
+        [Range(typeof(decimal), "0.01", "999999.99")]
+        public decimal LineTotal { get; set; }
+
+      
+        
     }
 }

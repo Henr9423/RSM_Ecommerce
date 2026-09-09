@@ -25,11 +25,11 @@ namespace rsm_backend.Infrastructure.Configurations
 				.HasForeignKey(oi => oi.ProductVariantId)
 				.OnDelete(DeleteBehavior.Restrict);
 
-			builder.HasOne(oi => oi.DeliveryOption).WithMany(d => d.Items).HasForeignKey(oi => oi.DeliveryOptionId);
+			
 
 			builder.Property(oi => oi.Quantity).IsRequired();
 			builder.Property(oi => oi.UnitPrice).HasColumnType("decimal(18,2)").IsRequired();
-			builder.Property(oi => oi.Discount).HasColumnType("decimal(18,2)").IsRequired();
+			builder.Property(oi => oi.UnitDiscount).HasColumnType("decimal(18,2)").IsRequired();
 			builder.Property(oi => oi.LineTotal).HasColumnType("decimal(18,2)").IsRequired();
 			builder.Property(oi => oi.CreatedAt).IsRequired();
 

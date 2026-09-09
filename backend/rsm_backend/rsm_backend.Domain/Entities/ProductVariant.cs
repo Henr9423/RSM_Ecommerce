@@ -20,6 +20,8 @@ namespace rsm_backend.Domain.Entities
 
 		public decimal Price { get; set; }
 
+		public decimal DiscountAmount { get; set; }
+
 		public Inventory Inventory { get; set; } = null!;
 
 		public ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();

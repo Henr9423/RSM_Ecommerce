@@ -13,7 +13,14 @@ namespace rsm_backend.Infrastructure.Configurations
 	{
 		public void Configure(EntityTypeBuilder<Customer> builder)
 		{
-			builder.HasMany(c => c.Addresses)
+
+            builder.HasKey(c => c.Id);
+
+
+            builder.HasIndex(c => c.UserId)
+							.IsUnique();
+
+            builder.HasMany(c => c.Addresses)
 				.WithOne(a => a.Customer)
 				.HasForeignKey(a => a.CustomerId)
 				.OnDelete(DeleteBehavior.Cascade);

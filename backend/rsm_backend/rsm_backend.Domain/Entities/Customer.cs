@@ -10,7 +10,11 @@ namespace rsm_backend.Domain.Entities
 	{
 		public int Id { get; set; }
 
-		public string FirstName { get; set; } = string.Empty;
+		// for logged in users
+		public string? UserId { get; set; }
+		public ApplicationUser? User { get; set; }
+
+        public string FirstName { get; set; } = string.Empty;
 		public string LastName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
 
@@ -27,9 +31,10 @@ namespace rsm_backend.Domain.Entities
 		// All orders
 		public ICollection<Order> Orders { get; set; } = new List<Order>();
 
-		// All carts
-		public ICollection<Cart> Carts { get; set; }=new List<Cart>();
+		// Cart
+		public Cart? Cart { get; set; }
 
+		public bool IsGuest { get; set; }
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 		public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 	}

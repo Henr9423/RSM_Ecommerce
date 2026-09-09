@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using rsm_backend.Application.DTO;
 using rsm_backend.Application.Services.Interfaces;
-using rsm_backend.Application.Services.Interfaces.IRepositories;
+using rsm_backend.Application.Services.Interfaces.Infrastructure;
+using rsm_backend.Application.Services.Interfaces.Infrastructure.IRepositories;
 using rsm_backend.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,71 @@ namespace rsm_backend.Application.Services
     {
         private readonly IProductRepository _productRepo;
         private readonly ILogger<ProductService> _logger;
+        private readonly IProductVariantRepository _productVariantRepo;
+        private readonly IImageConversionService _imageConversionService;
+        private readonly IObjectStorage _objectStorage;
 
-        public ProductService(IProductRepository productRepository,  ILogger<ProductService> logger)
+        public ProductService(IProductRepository productRepository,  ILogger<ProductService> logger, IProductVariantRepository productVariantRepository, IImageConversionService imageConversionService, IObjectStorage objectStorage)
         {
             _productRepo = productRepository;
+            _productVariantRepo = productVariantRepository;
             _logger = logger;
+            _imageConversionService = imageConversionService;
+            _objectStorage = objectStorage;
         }
-        public async Task<List<ProductCardDTO>> GetAllProducts()
+
+        public async Task<object> AddProductImageAsync(int productId, int productVariantId, Stream inputStream, AddProductImageRequest dto, CancellationToken cancellationToken)
         {
-       
-               try
+      
+            await using var webpStream =
+                await _imageConversionService.ConvertToWebPAsync(inputStream, cancellationToken);
+
+
+            var imageId = Guid.NewGuid();
+
+            var objectKey =
+                $"products/{productId}/variants/{productVariantId}/{imageId}.webp";
+
+
+
+
+            await _objectStorage.UploadAsync(
+                objectKey,
+                webpStream,
+                "image/webp", 
+                cancellationToken);
+
+
+
+            await AddProductImageToProductVariantAsync(productVariantId, objectKey, dto, cancellationToken);
+
+            return new
             {
-                List<Product> products = await _productRepo.GetAllProducts();
+                imageId,
+                objectKey
+            };
+        }
+
+        public async Task AddProductImageToProductVariantAsync(int productVariantId,string imageKey, AddProductImageRequest dto, CancellationToken cancellationToken)
+        {
+            
+            var productImage = new ProductImage()
+            {
+                IsPrimary = dto.IsPrimary,
+                StorageKey = imageKey,
+                AltText = dto.AltText,
+                SortOrder=dto.SortOrder,
+                CreatedAt= DateTime.UtcNow,
+            };
+
+            await _productVariantRepo.AddProductImageToVariantAsync(productImage, productVariantId, cancellationToken);
+        }
+
+        public async Task<List<ProductCardDTO>> GetProductsAsync(string? search)
+        {
+            try
+            {
+                List<Product> products = await _productRepo.GetProductsWithSearch(search);
 
                 return products.Select(p =>
                 {
@@ -40,11 +94,12 @@ namespace rsm_backend.Application.Services
                         Id = p.Id,
                         Name = p.Name,
                         Price = cheapestVariant?.Price,
-                        ImageKey = cheapestVariant?.ProductImages.FirstOrDefault()?.StorageKey,
+                        ImageUrl = _objectStorage.GetPublicUrl(cheapestVariant?.ProductImages.FirstOrDefault()?.StorageKey),
+                        VariantId = cheapestVariant?.Id,
                         Keywords = p.ProductTags.Select(pt => pt.Tag.Name).ToList(),
                         Rating = new RatingDTO
                         {
-                            Stars = p.AverageRating,
+                            AverageRating = p.AverageRating,
                             Count = p.RatingCount
                         }
                     };
@@ -56,7 +111,6 @@ namespace rsm_backend.Application.Services
                 _logger.LogError(ex, "Failed to get products");
                 throw;
             }
-
 
         }
     }

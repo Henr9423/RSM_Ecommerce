@@ -19,8 +19,10 @@ namespace rsm_backend.Domain.Entities
 	{
 		public int Id { get; set; }
 
-		// customer (FK)
-		public int CustomerId { get; set; }
+        public string OrderNumber { get; set; } = null!;
+
+        // customer (FK)
+        public int CustomerId { get; set; }
 		public Customer Customer { get; set; } = null!;
 
 		// addresses (FKs)
@@ -36,16 +38,24 @@ namespace rsm_backend.Domain.Entities
 
 		public decimal ShippingFee { get; set; }
 
-		
-		public decimal Subtotal {  get; set; }
+        public int? DeliveryOptionId { get; set; }
+
+        public DeliveryOption? DeliveryOption { get; set; }
+
+
+        public DateTime? EstimatedDeliveryFrom { get; set; }
+        public DateTime? EstimatedDeliveryTo { get; set; }
+
+        public decimal Subtotal {  get; set; }
 
 		public decimal Tax {  get; set; }
 
-		public decimal Discount { get; set; }
+		public decimal CouponDiscount { get; set; }
 		public decimal Total { get; set; }
 
-		
-		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public GuestOrderVerification? GuestOrderVerification { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 		public ICollection<OrderItem> OrderItems { get; set; }= new List<OrderItem>();
 

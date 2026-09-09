@@ -15,13 +15,18 @@ namespace rsm_backend.Infrastructure.Configurations
 		{
 			builder.HasKey(ca => ca.Id);
 
-			builder.HasOne(ca=>ca.Customer).WithMany(cu=>cu.Carts).HasForeignKey(ca=>ca.CustomerId).OnDelete(DeleteBehavior.SetNull);
-
+			builder.HasOne(ca=>ca.Customer).WithOne(cu=>cu.Cart).HasForeignKey<Cart>(ca=>ca.CustomerId).OnDelete(DeleteBehavior.SetNull);
+			
 			builder.Property(ca=>ca.Status).IsRequired();
 
-			builder.HasIndex(ca=>ca.GuestCartToken).IsUnique();
+            builder.HasIndex(c => c.GuestCartToken)
+					.IsUnique()
+					.HasFilter("\"status\" = 0");
 
-			builder.Property(ca=>ca.CreatedAt).IsRequired();
+            builder.HasOne(ca => ca.DeliveryOption).WithMany(d => d.Carts).HasForeignKey(ca => ca.DeliveryOptionId).OnDelete(DeleteBehavior.SetNull);
+
+
+            builder.Property(ca=>ca.CreatedAt).IsRequired();
 			builder.Property(ca=>ca.UpdatedAt).IsRequired();
 
 			

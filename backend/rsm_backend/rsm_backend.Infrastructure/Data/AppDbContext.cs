@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using rsm_backend.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,13 +11,15 @@ using System.Threading.Tasks;
 namespace rsm_backend.Infrastructure.Data
 {
 	
-	public class AppDbContext : DbContext
-	{
+	public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
+    {
 		public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
 		{
 
 		}
 
+		public DbSet<GuestOrderVerification> GuestOrderVerifications { get; set; }
+		public DbSet<DiscountCode> DiscountCodes { get; set; }
 		public DbSet<Brand> Brands { get; set; }
 
 		public DbSet<Cart> Carts { get; set; }

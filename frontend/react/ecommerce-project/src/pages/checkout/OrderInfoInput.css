@@ -1,0 +1,11 @@
+.order-info-input {
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.order-info-inputs input {
+  width: 100%;
+  box-sizing: border-box;
+}
