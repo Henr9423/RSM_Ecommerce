@@ -10,7 +10,7 @@ An example Docker environment configuration is provided in .env.example.
 
 
 
-##### \### Docker configuration
+## \### Docker configuration
 
 
 
@@ -86,7 +86,7 @@ docker compose up --build
 
 
 
-##### \### Running the backend locally
+## \### Running the backend locally
 
 
 
@@ -166,7 +166,7 @@ dotnet run --project rsm\_backend.Api
 
 ##### 
 
-##### \### Running tests
+## \### Running tests
 
 
 
