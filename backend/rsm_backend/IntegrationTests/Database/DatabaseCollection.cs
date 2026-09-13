@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace IntegrationTests.Database
 {
     [CollectionDefinition("Database")]
-    public class DatabaseCollection:ICollectionFixture<DatabaseFixture>
+    public class DatabaseCollection:ICollectionFixture<IntegrationDatabaseFixture>
     {
     }
 }

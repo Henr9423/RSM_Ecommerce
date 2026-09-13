@@ -72,8 +72,8 @@ namespace rsm_backend.Infrastructure.Configurations
 
 				t.HasCheckConstraint(
 					"ck_order_total_valid",
-					"total = subtotal + tax + shipping_fee-discount-discount"
-				);
+                    "total = subtotal + tax + shipping_fee-coupon_discount"
+                );
 			});
 		}
 	}

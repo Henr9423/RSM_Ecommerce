@@ -9,7 +9,7 @@ services:
         restart: unless-stopped
 
         ports:
-         - "3000:80"
+         - "${FRONTEND_PORT}:80"
             
         depends_on:
            - backend
@@ -25,11 +25,11 @@ services:
             ASPNETCORE_HTTP_PORTS: 8080
             ConnectionStrings__DefaultConnection: >-
                 Host=${DB_HOST};
-                Port=${DB_PORT} ;
+                Port=${DB_PORT};
                 Database=${DB_NAME};
                 Username=${DB_USER};
                 Password=${DB_PASSWORD}
-            Resend__ApiKey: ${Resend_Api_Key}
+            Resend__ApiKey: ${RESEND_API_KEY}
             GuestJwt__Secret: ${GUEST_JWT_SECRET}
             GuestJwt__Issuer: ${GUEST_JWT_ISSUER}
             GuestJwt__Audience: ${GUEST_JWT_AUDIENCE}
@@ -37,7 +37,7 @@ services:
             Frontend__Origin: ${FRONTEND_ORIGIN}
 
         ports:
-            - "8080:8080"
+            - "${BACKEND_PORT}:8080"
 
         depends_on:
             db:
@@ -48,18 +48,22 @@ services:
         image: postgres:17-bookworm
         container_name: rsm_postgres_db
         healthcheck:
-            test: ["CMD", "pg_isready", "-U", "henr9423", "-d", "rsm_ecommerce_db"]
+            test:
+                [
+                    "CMD-SHELL",
+                    'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"'
+                ]
             interval: 30s
             timeout: 10s
             retries: 5
         restart: unless-stopped
         environment:
-            POSTGRES_USER: henr9423
-            POSTGRES_PASSWORD: fhq89hfh
-            POSTGRES_DB: rsm_ecommerce_db
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
 
         ports:
-            - "5433:5432"
+            - "${POSTGRES_PORT}:5432"
 
         volumes:
             - pgdata:/var/lib/postgresql/data
@@ -69,11 +73,12 @@ services:
         restart: unless-stopped
         container_name: postgres-adminer-rsm
         depends_on:
-          - db
+           db: 
+            condition: service_healthy     
         ports:
-            - 8087:8080
+            - "${ADMINER_PORT}:8080"
         environment:
-            - ADMINER_DEFAULT_SERVER=db
+            - ADMINER_DEFAULT_SERVER=db    
 
     pgadmin:
         image: dpage/pgadmin4
@@ -83,10 +88,10 @@ services:
             db:
                 condition: service_healthy
         ports:
-         - "8086:80"
+         - "${PGADMIN_PORT}:80"
         environment:
-            PGADMIN_DEFAULT_EMAIL: root@local.com
-            PGADMIN_DEFAULT_PASSWORD: root
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
             
         volumes:
             - pgadmin_data:/var/lib/pgadmin

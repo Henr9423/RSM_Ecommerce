@@ -150,7 +150,7 @@ namespace rsm_backend.Application.Services
                 await _emailService.SendOrderConfirmationAsync(dto.Email, order.OrderNumber);
             }
 
-            return new PlaceOrderResponseDTO() { GuestAccessToken = guestAccessToken, OrderId = order.Id, Total = total };
+            return new PlaceOrderResponseDTO() { GuestAccessToken = guestAccessToken, OrderId = order.Id, Total = total , OrderNumber=order.OrderNumber};
             
         }
 
@@ -227,12 +227,12 @@ namespace rsm_backend.Application.Services
             return new OrderAddress
             {
                 FullName = $"{dto.FirstName} {dto.LastName}",
-                AddressLine1 = dto.BillingAddressLine1,
+                AddressLine1 = dto.BillingAddressLine1!,
                 AddressLine2=dto.BillingAddressLine2,
 
-                City = dto.BillingCity,
-                Country = dto.BillingCountry,
-                PostalCode = dto.BillingPostalCode,
+                City = dto.BillingCity!,
+                Country = dto.BillingCountry!,
+                PostalCode = dto.BillingPostalCode!,
                 StateOrRegion = dto.BillingStateOrRegion,
 
                 PhoneNumber = dto.PhoneNumber,

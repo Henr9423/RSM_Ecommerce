@@ -11,6 +11,7 @@ COPY ["rsm_backend.Infrastructure/rsm_backend.Infrastructure.csproj", "rsm_backe
 
 RUN dotnet restore "rsm_backend.Api/rsm_backend.Api.csproj"
 
+
 # Copy the rest of the source code
 COPY . .
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Resend;
 using rsm_backend.Application.DTO;
 using rsm_backend.Application.Services.Interfaces.Infrastructure.IRepositories;
 using rsm_backend.Domain.Entities;
@@ -29,8 +30,8 @@ namespace rsm_backend.Infrastructure.Repositories
             try
             {
                 _context.Orders.Add(order);
-               
 
+                await _context.SaveChangesAsync();
                 return order;
             }
             catch (DbUpdateException ex)
@@ -54,17 +55,6 @@ namespace rsm_backend.Infrastructure.Repositories
         public Task<Order?> FindAsync(int orderId)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task<Order?> GetByGuestAccessToken(string guestAccessTokenHash, int orderId)
-        {
-                 return await _context.Orders
-                 .Include(o => o.OrderItems).ThenInclude(oi => oi.ProductVariant).ThenInclude(pv => pv.ProductImages)
-                 .Include(o => o.OrderItems).ThenInclude(oi => oi.ProductVariant).ThenInclude(pv => pv.Product).ThenInclude(p => p.ProductTags).ThenInclude(pt => pt.Tag)
-                 .Include(o=> o.GuestOrderVerification)
-                 .Include(o => o.Customer)
-                 .AsSplitQuery()
-                 .SingleOrDefaultAsync(o => o.GuestOrderVerification!=null && o.GuestOrderVerification.CodeHash==guestAccessTokenHash && o.Id== orderId);
         }
 
         public async Task<List<Order>> GetAllByUserIdAsync(string userId)
@@ -95,7 +85,7 @@ namespace rsm_backend.Infrastructure.Repositories
                 .Include(o => o.OrderItems).ThenInclude(oi => oi.ProductVariant).ThenInclude(pv => pv.Product).ThenInclude(p => p.ProductTags).ThenInclude(pt => pt.Tag)
                 .Include(o => o.Customer)
                 .AsSplitQuery()
-                .SingleOrDefaultAsync(o => o.Customer.UserId == userId);
+                .SingleOrDefaultAsync(o => o.Customer.UserId == userId && o.Id==orderId);
         }
 
         public async Task<Order?> GetByOrderNumber(string orderNumber)

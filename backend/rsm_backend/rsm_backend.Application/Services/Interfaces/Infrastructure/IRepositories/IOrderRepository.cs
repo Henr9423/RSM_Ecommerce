@@ -16,7 +16,6 @@ namespace rsm_backend.Application.Services.Interfaces.Infrastructure.IRepositori
 
         public Task<Order?> GetByUserId(int orderId, string userId);
 
-        public Task<Order?> GetByGuestAccessToken(string guestAccessTokenHash, int orderId);
 
         public Task<Order?> GetByOrderNumber(string orderNumber);
 

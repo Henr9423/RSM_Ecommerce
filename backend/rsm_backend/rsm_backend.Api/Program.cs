@@ -46,8 +46,13 @@ namespace rsm_backend.Api
 
 
             //JWT and Cookie authentication setup for guests and users
-            var secret = builder.Configuration["GuestJwt:Secret"]
-                        ?? throw new InvalidOperationException("Guest JWT secret is not configured.");
+            var secret = builder.Configuration["GuestJwt:Secret"];
+
+            if (string.IsNullOrWhiteSpace(secret))
+            {
+                throw new InvalidOperationException(
+                    "Guest JWT secret is not configured.");
+            }
 
             builder.Services.AddAuthentication(options =>
             {
@@ -216,7 +221,7 @@ namespace rsm_backend.Api
 			if (app.Environment.IsDevelopment())
 			{
 				app.UseSwagger();
-				app.UseSwaggerUI();
+				app.UseSwaggerUI(); 
 			}
 
             app.UseExceptionHandler(errorApp =>

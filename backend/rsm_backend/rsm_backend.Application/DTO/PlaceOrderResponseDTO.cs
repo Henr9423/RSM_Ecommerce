@@ -9,6 +9,8 @@ namespace rsm_backend.Application.DTO
     public  class PlaceOrderResponseDTO
     {
         public int OrderId { get; init; }
+
+        public string OrderNumber { get; init; } = string.Empty;
         public string? GuestAccessToken { get; init; }
         public decimal Total { get; init; }
 

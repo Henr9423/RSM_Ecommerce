@@ -531,7 +531,8 @@ namespace UnitTests.Application
         public async Task AddCartToOrderAsync_WhenPlaceOrderDTOIsNull_ThrowsArgumentNullException()
         {
             //Arrange
-            PlaceOrderDTO placeOrderDTO = null;
+            PlaceOrderDTO placeOrderDTO = null!;
+
            
             //Act
             Func<Task> Act= ()=> _sut.AddCartToOrderAsync(placeOrderDTO);
@@ -610,8 +611,10 @@ namespace UnitTests.Application
             var result = await _sut.AddCartToOrderAsync(placeOrderDTO);
 
             //Assert
+            createdOrder.Should().NotBeNull();
+            createdOrder.ShippingAddress.Should().NotBeNull();
 
-            createdOrder!.BillingAddress.Should().BeEquivalentTo(
+            createdOrder.BillingAddress.Should().BeEquivalentTo(
                           createdOrder.ShippingAddress,
                           options => options
                               .Excluding(x => x.Id)
