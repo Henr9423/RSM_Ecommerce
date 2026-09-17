@@ -31,6 +31,8 @@ export function Product({ product, loadCart }) {
         setQuantity(quantitySelected);
     }
 
+    const ratingImage = Math.round(product.rating.averageRating * 2) * 5;
+
     return (
 
         <div className="product-container"
@@ -48,7 +50,7 @@ export function Product({ product, loadCart }) {
             <div className="product-rating-container">
                 <img className="product-rating-stars"
                     data-testid="product-rating-stars-image"
-                    src={`images/ratings/rating-${product.rating.stars * 10}.png`} />
+                    src={`/images/ratings/rating-${ratingImage}.png`} />
                 <div className="product-rating-count link-primary">
                     {product.rating.count}
                 </div>

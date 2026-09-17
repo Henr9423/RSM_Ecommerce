@@ -2,7 +2,7 @@
   height: 60px;
   padding-left: 30px;
   padding-right: 30px;
-  background-color: white;
+  background-color: black;
 
   display: flex;
   justify-content: center;
@@ -61,6 +61,7 @@
 
   font-size: 22px;
   font-weight: 500;
+  color: white;
 
   display: flex;
   justify-content: center;
